@@ -227,6 +227,8 @@ const onContainerPriceKeyPressed = evt => {
 		let newItemValue = 0;
 		const currentItemPriceHolder = document.querySelector('.js-shopping-list-priceitem[data-idx="'+idx+'"]')
 		newItemValue = (100 - parseFloat(evt.target.value))/100 * (currentItemPriceHolder.innerHTML.slice(1))
+		newItemValue = newItemValue.toFixed(2)
+		newItemValue = parseFloat(newItemValue)
 		myShoppingList.editPriceInList(idx, newItemValue);
 		console.log(myShoppingList.priceList)
 		render(shoppingListCont, myShoppingList);
