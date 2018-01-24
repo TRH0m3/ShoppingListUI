@@ -78,8 +78,8 @@ const render = (container, shoppingList) => {
 			str += `<li>
 				<span class="js-shopping-list-listitem" data-idx="${i}">${shoppingList.list[i]}</span>
 				<span class="js-shopping-list-priceitem" data-idx="${i}">$${shoppingList.priceList[i].toFixed(2)}</span>
-				<span class="js-delete-btn btn btn-primary m-2 p-0" data-idx="${i}">Delete</span>
-				<span class="js-coupon-btn btn btn-primary m-2 p-0" data-idx="${i}">Coupon</span>
+				<span class="js-delete-btn btn btn-primary ml-2 mr-1 p-0" data-idx="${i}">Delete</span>
+				<span class="js-coupon-btn btn btn-primary m-0 p-0" data-idx="${i}">Apply Coupon</span>
 			</li>`;
 	}
 	container.innerHTML = `<ol>${str}</ol>`
@@ -197,7 +197,6 @@ const onContainerClicked = evt => {
 		const priceContainer = document.querySelector('.js-shopping-list-priceitem[data-idx="'+idx+'"]');
 		myShoppingList.removeItemFromList(itemContainer.innerHTML);
 		myShoppingList.removePriceFromList(priceContainer.innerHTML);
-		console.log(myShoppingList.priceList)
 		render(shoppingListCont, myShoppingList);
 	}
 	else if (evt.target.matches('.js-shopping-list-listitem')) {
@@ -230,7 +229,6 @@ const onContainerPriceKeyPressed = evt => {
 		newItemValue = newItemValue.toFixed(2)
 		newItemValue = parseFloat(newItemValue)
 		myShoppingList.editPriceInList(idx, newItemValue);
-		console.log(myShoppingList.priceList)
 		render(shoppingListCont, myShoppingList);
 	}
 }
