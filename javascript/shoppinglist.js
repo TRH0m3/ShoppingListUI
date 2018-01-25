@@ -37,7 +37,7 @@ const getShoppingList = () => {
 		},
 		removePriceFromList: (listPrice) => {
 			ShoppingList.priceList = ShoppingList.priceList.filter((currentItem) => {
-				return currentItem !== parseFloat(listPrice.slice(1));
+				return currentItem !== parseFloat(listPrice.slice(1), 10);
 			});
 			return ShoppingList.priceList;
 		},
@@ -52,7 +52,7 @@ const getShoppingList = () => {
 			for (let i = 0; i< ShoppingList.priceList.length; i++) {
 				ShoppingList.total += ShoppingList.priceList[i]
 			}
-			parseFloat(ShoppingList.total).toFixed(2)
+			parseFloat(ShoppingList.total, 10).toFixed(2)
 			return ShoppingList.total
 			},
 		countItemsInList: () => {
@@ -95,7 +95,7 @@ const render = (container, shoppingList) => {
 		totalDisplayPrice.style.backgroundColor = "red"
 		totalDisplayPrice.style.fontWeight = "bold";
 	}
-	totalDisplayPrice.innerHTML = `Shopping List Total is: $${parseFloat(shoppingList.total).toFixed(2)}, Remaining Budget: $${remainingBudget}`
+	totalDisplayPrice.innerHTML = `Shopping List Total is: $${parseFloat(shoppingList.total, 10).toFixed(2)}, Remaining Budget: $${remainingBudget}`
 }
 
 // EVENT LISTENERS
@@ -121,7 +121,7 @@ const onAddToListClicked = evt => {
 	else {
 		for (let i=0; i< splitItemValue.length; i++) {
 			myShoppingList.addToList(splitItemValue[i])
-			myShoppingList.addToPriceList(parseFloat(splitPriceValue[i]));
+			myShoppingList.addToPriceList(parseFloat(splitPriceValue[i], 10));
 		}
 	}
 	shoppingListInput.value = '';
@@ -151,7 +151,7 @@ const onEnterKeyPressedItem = evt => {
 		else {
 			for (let i=0; i< splitItemValue.length; i++) {
 				myShoppingList.addToList(splitItemValue[i])
-				myShoppingList.addToPriceList(parseFloat(splitPriceValue[i]));
+				myShoppingList.addToPriceList(parseFloat(splitPriceValue[i], 10));
 			}
 		}
 		evt.target.value = '';
@@ -181,7 +181,7 @@ const onEnterKeyPressedPrice = evt => {
 		else {
 			for (let i=0; i< splitItemValue.length; i++) {
 				myShoppingList.addToList(splitItemValue[i])
-				myShoppingList.addToPriceList(parseFloat(splitPriceValue[i]));
+				myShoppingList.addToPriceList(parseFloat(splitPriceValue[i], 10));
 			}
 		}
 		shoppingListInput.value = '';
@@ -225,9 +225,9 @@ const onContainerPriceKeyPressed = evt => {
 		const idx = parseInt(evt.target.getAttribute('data-idx'), 10);
 		let newItemValue = 0;
 		const currentItemPriceHolder = document.querySelector('.js-shopping-list-priceitem[data-idx="'+idx+'"]')
-		newItemValue = (100 - parseFloat(evt.target.value))/100 * (currentItemPriceHolder.innerHTML.slice(1))
+		newItemValue = (100 - parseFloat(evt.target.value, 10))/100 * (currentItemPriceHolder.innerHTML.slice(1))
 		newItemValue = newItemValue.toFixed(2)
-		newItemValue = parseFloat(newItemValue)
+		newItemValue = parseFloat(newItemValue, 10)
 		myShoppingList.editPriceInList(idx, newItemValue);
 		render(shoppingListCont, myShoppingList);
 	}
